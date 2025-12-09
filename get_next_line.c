@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/09 14:13:16 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/09 17:01:57 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,18 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-// char *get_next_line(int fd)
-// {
-
-// }
-static char *str = "Hello World";
-static int nbr;
-
-void test_global(void)
+char	*get_next_line(int fd)
 {
-    printf("%s\n", str);
-    printf("%d\n", nbr);
+	static char buff[11];
+	read(fd, buff, 10);
+	return (buff);
 }
 
 int main (void)
 {
-    test_global();
-    str = "Bye World";
-    nbr = 1;
-    test_global();
-    return (0);
+	int fd;
+
+	fd = open("test.txt", O_RDONLY);
+	printf("%s\n", get_next_line(fd));
+	return (0);
 }
