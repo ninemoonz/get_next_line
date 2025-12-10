@@ -6,11 +6,11 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:22:48 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/09 16:39:37 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/10 14:57:13 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
