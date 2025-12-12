@@ -6,57 +6,64 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/10 14:59:01 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/12 14:03:01 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <stdio.h>
+#include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+char *left_str(char *left)
 {
-	size_t	i;
+	int i;
+	int j;
+	char *tmp;
+	char *res;
 
 	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	j = 0;
+	tmp = left;
+	while (tmp[i])
+	{
+		if (tmp[i] == '\\' && tmp[i + 1] == 'n')
+		{
+			res = ft_substr(tmp, j, (size_t)i);
+			return (tmp);
+		}
+		else
+			i++;
+	}
+	return (tmp);
 }
-
-// char *newline_check(char *buffer)
-// {
-
-// }
 
 char	*get_next_line(int fd)
 {
-	int fd_r;
-	int buff_size;
+	int line_len;
 	char *buff;
-	int str_len;
-	
-	buff_size = 42;
-	buff = malloc(buff_size + 1 * sizeof(char));
-	if (!buff)
+	char *str_dup;
+	char *tmp;
+
+	buff = malloc(BUFFER_SIZE + 1 * sizeof(char));
+	if (buff == NULL || BUFFER_SIZE <= 0)
 		return (NULL);
-	fd_r = read(fd, buff, 42);
-	str_len = ft_strlen(buff);
-	printf("str_len: %d\n", str_len);
-	return (buff);
+	tmp = left_str(buff);
+	line_len = read(fd, tmp, BUFFER_SIZE);
+	if (line_len <= 0)
+	{
+		free(buff);
+		return (NULL);
+	}
+
+	return (tmp);
 }
-
-
 
 int main (void)
 {
 	int fd;
 	char *res;
-
 	fd = open("test.txt", O_RDONLY);
-	res = get_next_line(fd);
+	res= get_next_line(fd);
+	
 	printf("%s\n", res);
+	close(fd);
 	return (0);
 }
