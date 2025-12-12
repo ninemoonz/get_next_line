@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/12 15:14:31 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/12 16:50:57 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*left_str(char *left)
 		}
 		i++;
 	}
-	return (NULL);
+	return (res);
 }
 
 char	*get_next_line(int fd)
@@ -38,12 +38,17 @@ char	*get_next_line(int fd)
 	char	*buff;
 	char	*tmp;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (buff == NULL || BUFFER_SIZE <= 0)
+	if (!buff)
 		return (NULL);
 	line_len = read(fd, buff, BUFFER_SIZE);
 	if (line_len <= 0)
-		return (free(buff), NULL);
+	{
+		free(buff);
+		return (NULL);
+	}
 	buff[line_len] = '\0';
 	tmp = left_str(buff);
 	return (tmp);
@@ -52,16 +57,17 @@ char	*get_next_line(int fd)
 int main (void)
 {
 	int fd;
-	int count;
 	char *res;
 
 	fd = open("test.txt", O_RDONLY);
-	printf("[fd No.]: %d\n", fd);
-	res= get_next_line(fd);
-	count = 1;
-	printf("[Final result %d]: %s\n", count++, res);
-	printf("[Final result %d]: %s\n", count++, res);
-	printf("[Final result %d]: %s\n", count++, res);
+	while (1)
+	{
+		res = get_next_line(fd);
+		if (res == NULL)
+			break;
+		printf("result line: %s\n", res);
+		res = NULL;
+	}
 	close(fd);
 	return (0);
 }

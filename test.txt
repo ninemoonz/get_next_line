@@ -1,4 +1,3 @@
-Hello World!
-This is a file.
-NICE TO
-MEET YOU
+this is a very long long string so long!
+this is a short string!
+I want to finish the 
