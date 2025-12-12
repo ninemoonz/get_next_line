@@ -6,11 +6,11 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:36:33 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/12 13:57:21 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/12 15:07:11 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include <stdarg.h>
 # include <stdio.h>
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include "get_next_line.h"
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
+#  define BUFFER_SIZE 10
 # endif
 
 char	*get_next_line(int fd);
