@@ -6,16 +6,11 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/17 15:16:24 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/17 15:29:10 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// char *extract_nl(char *chunk)
-// {
-	
-// }
 
 static char	*ft_strchr(const char *str, int init)
 {
@@ -37,12 +32,26 @@ static char	*ft_strchr(const char *str, int init)
 	return (NULL);
 }
 
+static char *extract_line(char *line_chunk)
+{
+	char *stash;
+	ssize_t i;
+
+	i = 0;
+	while (line_chunk[i] != '\n' && line_chunk[i])
+		i++;
+	if (line_chunk[i] == 0 || line_chunk[1] == 0)
+		return (NULL);
+	stash = ft_substr(line_chunk, i + 1, ft_strlen(line_chunk) - i);
+	line_chunk[i + 1] = 0;
+	return (stash);
+}
+
 static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 {
 	ssize_t rd_len;
 	char *tmp;
 
-	rd_len = 1;
 	while (rd_len > 0)
 	{
 		rd_len = read(fd, buffer, BUFFER_SIZE);
@@ -77,6 +86,7 @@ char *get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	line = fill_until_nl(fd, left_c, buffer);
+	left_c = extract_line(line);
 	return (line);
 }
 
@@ -86,8 +96,9 @@ int main (void)
 	char *res;
 
 	fd = open("test.txt", O_RDONLY);
-	res = get_next_line(fd);
-	printf("%s\n", res);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	close(fd);
 	return (0);
 }
