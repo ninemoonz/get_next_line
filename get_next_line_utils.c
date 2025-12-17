@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:45 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/12 13:56:40 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/17 14:46:17 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,52 @@ char	*ft_strdup(const char *s)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	int		tot_len;
+	char	*dest;
+
+	tot_len = ft_strlen(s1) + ft_strlen(s2);
+	dest = (char *)malloc((tot_len + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		dest[i] = s2[j];
+		i++;
+		j++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+static char	*ft_strchr(const char *str, int init)
+{
+	int		i;
+	char	*tmp_str;
+	char	c;
+
+	i = 0;
+	c = (char)init;
+	tmp_str = (char *)str;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return (&tmp_str[i]);
+		i++;
+	}
+	if (str[i] == c)
+		return (&tmp_str[i]);
+	return (NULL);
 }
