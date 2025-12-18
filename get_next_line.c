@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/17 15:33:07 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/18 11:16:57 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char *extract_line(char *line_chunk)
 	ssize_t i;
 
 	i = 0;
-	while (line_chunk[i] != '\n' && line_chunk[i])
+	while (line_chunk[i] != '\n' && line_chunk[i] != '\0')
 		i++;
 	if (line_chunk[i] == 0 || line_chunk[1] == 0)
 		return (NULL);
@@ -52,6 +52,7 @@ static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 	ssize_t rd_len;
 	char *tmp;
 
+	rd_len = 1;
 	while (rd_len > 0)
 	{
 		rd_len = read(fd, buffer, BUFFER_SIZE);
@@ -81,24 +82,35 @@ char *get_next_line(int fd)
 	char *buffer;
 	
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(left_c);
+		left_c = NULL;
 		return (NULL);
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	}
+	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return (NULL);
+		return (free(buffer), NULL);
 	line = fill_until_nl(fd, left_c, buffer);
+	if (!line)
+		return (NULL);
 	left_c = extract_line(line);
 	return (line);
 }
 
-// int main (void)
-// {
-// 	int fd;
-// 	char *res;
+int main (void)
+{
+	int fd;
+	char *res;
 
-// 	fd = open("test.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("test.txt", O_RDONLY);
+	res = get_next_line(fd);
+	printf("%s", res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	res = get_next_line(fd);
+	printf("%s", res);
+	close(fd);
+	return (0);
+}

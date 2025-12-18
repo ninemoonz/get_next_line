@@ -94,22 +94,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (dest);
 }
 
-static char	*ft_strchr(const char *str, int init)
-{
-	int		i;
-	char	*tmp_str;
-	char	c;
-
-	i = 0;
-	c = (char)init;
-	tmp_str = (char *)str;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (&tmp_str[i]);
-		i++;
-	}
-	if (str[i] == c)
-		return (&tmp_str[i]);
-	return (NULL);
-}
