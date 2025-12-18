@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/18 14:44:02 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:02:55 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*ft_strchr(const char *str, int init)
 {
-	int		i;
+	int	i;
 	char	*tmp_str;
 	char	c;
 
@@ -27,7 +27,7 @@ static char	*ft_strchr(const char *str, int init)
 			return ((char *)&tmp_str[i]);
 		i++;
 	}
-	if (str[0] == c)
+	if (str[i] == c)
 		return ((char *)&tmp_str[i]);
 	return (NULL);
 }
@@ -40,10 +40,10 @@ static char	*extract_line(char *line_chunk)
 	i = 0;
 	while (line_chunk[i] != '\n' && line_chunk[i] != '\0')
 		i++;
-	if (line_chunk[i] == 0)
+	if (line_chunk[i] == '\0')
 		return (NULL);
 	stash = ft_substr(line_chunk, i + 1, ft_strlen(line_chunk) - i);
-	if (stash[0] == '\0')
+	if (*stash == 0)
 	{
 		free(stash);
 		stash = NULL;
@@ -52,7 +52,7 @@ static char	*extract_line(char *line_chunk)
 	return (stash);
 }
 
-static char	*fill_until_nl(int fd, char *left_c, char *buffer)
+static char	*fill_until_nl(int fd, char *stash, char *buffer)
 {
 	ssize_t		rd_len;
 	char		*tmp;
@@ -63,44 +63,44 @@ static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 		rd_len = read(fd, buffer, BUFFER_SIZE);
 		if (rd_len == -1)
 		{
-			free(left_c);
+			free(stash);
 			return (NULL);
 		}
 		else if (rd_len == 0)
 			break ;
 		buffer[rd_len] = '\0';
-		if (!left_c)
-			left_c = ft_strdup("");
-		tmp = left_c;
-		left_c = ft_strjoin(tmp, buffer);
+		if (!stash)
+			stash = ft_strdup("");
+		tmp = stash;
+		stash = ft_strjoin(tmp, buffer);
 		free(tmp);
 		tmp = NULL;
-		if (ft_strchr(left_c, '\n'))
+		if (ft_strchr(stash, '\n'))
 			break ;
 	}
-	return (left_c);
+	return (stash);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*left_c;
+	static char	*stash;
 	char		*line;
 	char		*buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_c);
-		left_c = NULL;
+		free(stash);
+		stash = NULL;
 		return (NULL);
 	}
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (free(buffer), NULL);
-	line = fill_until_nl(fd, left_c, buffer);
+	line = fill_until_nl(fd, stash, buffer);
+	free(buffer);
 	if (!line)
 		return (NULL);
-	free(buffer);
-	left_c = extract_line(line);
+	stash = extract_line(line);
 	return (line);
 }
 
@@ -108,8 +108,10 @@ char	*get_next_line(int fd)
 // {
 // 	int fd;
 // 	char *res;
+// 	int i;
 
 // 	fd = open("test.txt", O_RDONLY);
+// 	i = 0;
 // 	while (1)
 // 	{
 // 		res = get_next_line(fd);
@@ -117,6 +119,7 @@ char	*get_next_line(int fd)
 // 		free(res);
 // 		if (!res)
 // 			break;
+// 		i++;
 // 	}
 // 	close(fd);
 // 	return (0);
