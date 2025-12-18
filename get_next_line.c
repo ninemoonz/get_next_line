@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/18 11:16:57 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/18 14:44:02 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,35 @@ static char	*ft_strchr(const char *str, int init)
 			return ((char *)&tmp_str[i]);
 		i++;
 	}
-	if (str[i] == c)
+	if (str[0] == c)
 		return ((char *)&tmp_str[i]);
 	return (NULL);
 }
 
-static char *extract_line(char *line_chunk)
+static char	*extract_line(char *line_chunk)
 {
-	char *stash;
-	ssize_t i;
+	char		*stash;
+	ssize_t		i;
 
 	i = 0;
 	while (line_chunk[i] != '\n' && line_chunk[i] != '\0')
 		i++;
-	if (line_chunk[i] == 0 || line_chunk[1] == 0)
+	if (line_chunk[i] == 0)
 		return (NULL);
 	stash = ft_substr(line_chunk, i + 1, ft_strlen(line_chunk) - i);
-	line_chunk[i + 1] = 0;
+	if (stash[0] == '\0')
+	{
+		free(stash);
+		stash = NULL;
+	}
+	line_chunk[i + 1] = '\0';
 	return (stash);
 }
 
 static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 {
-	ssize_t rd_len;
-	char *tmp;
+	ssize_t		rd_len;
+	char		*tmp;
 
 	rd_len = 1;
 	while (rd_len > 0)
@@ -62,7 +67,7 @@ static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 			return (NULL);
 		}
 		else if (rd_len == 0)
-			break;
+			break ;
 		buffer[rd_len] = '\0';
 		if (!left_c)
 			left_c = ft_strdup("");
@@ -71,16 +76,17 @@ static char	*fill_until_nl(int fd, char *left_c, char *buffer)
 		free(tmp);
 		tmp = NULL;
 		if (ft_strchr(left_c, '\n'))
-			break;
+			break ;
 	}
 	return (left_c);
 }
-char *get_next_line(int fd)
+
+char	*get_next_line(int fd)
 {
-	static char *left_c;
-	char *line;
-	char *buffer;
-	
+	static char	*left_c;
+	char		*line;
+	char		*buffer;
+
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free(left_c);
@@ -93,24 +99,25 @@ char *get_next_line(int fd)
 	line = fill_until_nl(fd, left_c, buffer);
 	if (!line)
 		return (NULL);
+	free(buffer);
 	left_c = extract_line(line);
 	return (line);
 }
 
-int main (void)
-{
-	int fd;
-	char *res;
+// int main (void)
+// {
+// 	int fd;
+// 	char *res;
 
-	fd = open("test.txt", O_RDONLY);
-	res = get_next_line(fd);
-	printf("%s", res);
-	res = get_next_line(fd);
-	printf("%s", res);
-	res = get_next_line(fd);
-	printf("%s", res);
-	res = get_next_line(fd);
-	printf("%s", res);
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", O_RDONLY);
+// 	while (1)
+// 	{
+// 		res = get_next_line(fd);
+// 		printf("%s", res);
+// 		free(res);
+// 		if (!res)
+// 			break;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
