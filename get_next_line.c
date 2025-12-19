@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/18 17:48:18 by kkweon           ###   ########.fr       */
+/*   Updated: 2025/12/19 16:59:11 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ static char	*extract_line(char *line_chunk)
 	i = 0;
 	while (line_chunk[i] != '\n' && line_chunk[i] != '\0')
 		i++;
-	if (line_chunk[i] == 0)
+	if (line_chunk[i] == '\0')
 		return (NULL);
 	stash = ft_substr(line_chunk, i + 1, ft_strlen(line_chunk) - i);
-	if (*stash == 0)
+	if (*stash == '\0')
 	{
 		free(stash);
 		stash = NULL;
@@ -54,18 +54,18 @@ static char	*extract_line(char *line_chunk)
 
 static char	*fill_until_nl(int fd, char *stash, char *buffer)
 {
-	ssize_t		rd_len;
+	ssize_t		rd_bytes;
 	char		*tmp;
 
-	rd_len = 1;
-	while (rd_len > 0)
+	rd_bytes = 1;
+	while (rd_bytes > 0)
 	{
-		rd_len = read(fd, buffer, BUFFER_SIZE);
-		if (rd_len == -1)
+		rd_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (rd_bytes == -1)
 			return (free(stash), NULL);
-		else if (rd_len == 0)
+		else if (rd_bytes == 0)
 			break ;
-		buffer[rd_len] = '\0';
+		buffer[rd_bytes] = '\0';
 		if (!stash)
 			stash = ft_strdup("");
 		tmp = stash;
@@ -77,6 +77,7 @@ static char	*fill_until_nl(int fd, char *stash, char *buffer)
 		if (ft_strchr(stash, '\n'))
 			break ;
 	}
+	printf("fill_until_nl: %s\n", stash);
 	return (stash);
 }
 
@@ -103,23 +104,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main (void)
-{
-	int fd;
-	char *res;
-	int i;
-
-	fd = open("/home/kkweon/francinette-image/temp/get_next_line/fsoares/1char.txt", O_RDONLY);
-	i = 0;
-	while (1)
-	{
-		res = get_next_line(fd);
-		if (!res)
-			break;
-		printf("%s", res);
-		free(res);
-		i++;
-	}
-	close(fd);
-	return (0);
-}
+// int main (void)
+// {
+// 	int fd;
+// 	char *res;
+// 	int i;
+// 	fd = open("test.txt", O_RDONLY);
+// 	i = 0;
+// 	res = get_next_line(fd);
+// 	printf("%s", res);
+// 	free(res);
+// 	close(fd);
+// 	return (0);
+// }
