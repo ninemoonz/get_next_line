@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/19 16:59:11 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/08 13:07:47 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static char	*fill_until_nl(int fd, char *stash, char *buffer)
 		if (ft_strchr(stash, '\n'))
 			break ;
 	}
-	printf("fill_until_nl: %s\n", stash);
 	return (stash);
 }
 

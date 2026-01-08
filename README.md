@@ -8,7 +8,7 @@ Purpose of this project is to let us understand how files can be opened, closed,
 
 ## Instructions
 
-This program or function is written in C and requires a C compiler such as gcc or cc.
+This program or function is written in C and requires a C compiler such as **gcc** or **cc**.
 
 1. To use get_next_line, following header file is required:
 
