@@ -2,9 +2,9 @@ _This project has been created as part of the 42 curriculum by kkweon_
 
 ## Description
 
-Goal of get_next_line project is to create a function that reads a file and returns a line of text at a time.
-Each call to the function should return the next line from the file.
-Purpose of this project is to let us understand how files can be opened, closed, and managed using file descriptor (or fd), as well as how static variables can be used to preserve data between function calls.
+**Goal** of get_next_line project is to create a function that reads a file and returns a line of text at a time.\
+Each call to the function should return the next line from the file.\
+**Purpose** of this project is to let us understand how files can be opened, closed, and managed using file descriptor (or fd), as well as how static variables can be used to preserve data between function calls.
 
 #### File descriptor (fd)
 > File descriptor (or fd) is an index variable which is assigned to identify an open file.\
@@ -76,8 +76,9 @@ gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=<
 - `man open`
 - `man read`
 - `man close`
-- Reference: [42 gitbook get_next_line](https://42-cursus.gitbook.io/guide/1-rank-01/get_next_line)
-- Article: [42 Get Next Line Guide (String Approach) — Chapter 1: Reading from file](https://medium.com/@lannur-s/gnl-c3cff1ee552b)
+- [Static Variable in C](https://www.geeksforgeeks.org/c/static-variables-in-c/)
+- [42 gitbook get_next_line](https://42-cursus.gitbook.io/guide/1-rank-01/get_next_line)
+- [42 Get Next Line Guide (String Approach) — Chapter 1: Reading from file](https://medium.com/@lannur-s/gnl-c3cff1ee552b)
 
 **LLMs (e.g., ChatGPT, Gemini, Claude)** were not used to for direct code generation.\
 AI is used as supportive tools to understand concepts, programming logic, and to enhance learning efficiency.
