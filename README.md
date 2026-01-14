@@ -7,18 +7,24 @@ Each call to the function should return the next line from the file.\
 **Purpose** of this project is to let us understand how files can be opened, closed, and managed using file descriptor (or fd), as well as how static variables can be used to preserve data between function calls.
 
 #### File descriptor (fd)
-> File descriptor (or fd) is an index variable which is assigned to identify an open file.\
-fd typically uses a unique, non-negative integer for assigning an open file.
+ **File descriptor (fd)** is **an unique and non-negative integer** that process use as a **handle** to identify an open file. It acts as an index for the process's file descriptor table.
 
-#### File Table Entry
-> It is a structure which is maintained from Kernerl side, contains information about the assgined file.
+ > ***process***: An active, running instance of a computer. Loaded on into memory with it's own allocated resources & data structres.
+
+ > ***instance***: One concrete, live occurence of a program that has been loaded into memory and is executing with tis own state and resources. 
 
 #### File Descriptor Table
-> An array of File Table  Entry which stores references (fd) to the opened files. Each File Table Entry holds a pointer links the fd to the **Global File Descriptor**
+**File Descriptor Table** is per-process table which is managed by the kernel.\
+Each entry in the table is indexed by a **file descriptor (fd)** and points to a **File Table Entry**
+
+> ***kernel***: The core component of an operating system (OS) that acts as a bridge between software and hardware.\
+Kernel manages crucial system resources like the CPU, memory, and input/output (I/O) to allow applications to run and communicate with the computer's physical parts.
+
+#### File Table Entry
+> **File Table Entry (or Open File Description)** is a **kernel level structure** that stores information about an open file.
 
 #### Static variables
-> Property of static variable is to retaining the value between multiple function calls.\
-Once it is initialized, the value is stored and does not get destroyed when the function ends, but stores the value until when the program ends. 
+Property of static variable is to retaining the value between multiple function calls. Once it is initialized, the value is stored and does not get destroyed when the function ends, but stores the value until when the program ends. 
 #### Example
 ```C
 #include "stdio.h"

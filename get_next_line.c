@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2026/01/08 13:07:47 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/14 15:37:41 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,17 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int main (void)
-// {
-// 	int fd;
-// 	char *res;
-// 	int i;
-// 	fd = open("test.txt", O_RDONLY);
-// 	i = 0;
-// 	res = get_next_line(fd);
-// 	printf("%s", res);
-// 	free(res);
-// 	close(fd);
-// 	return (0);
-// }
+int main (void)
+{
+	int fd;
+	char *res;
+	fd = open("test.txt", O_RDONLY);
+	while (res != NULL)
+	{
+		res = get_next_line(fd);
+		printf("%s", res);
+		free(res);
+	}
+	close(fd);
+	return (0);
+}
