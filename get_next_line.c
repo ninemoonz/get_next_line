@@ -6,13 +6,13 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2026/01/14 15:37:41 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/15 17:52:52 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_strchr(const char *str, int init)
+char	*ft_strchr(const char *str, int init)
 {
 	int		i;
 	char	*tmp_str;
@@ -32,27 +32,27 @@ static char	*ft_strchr(const char *str, int init)
 	return (NULL);
 }
 
-static char	*extract_line(char *line_chunk)
+char	*extract_line(char *line)
 {
-	char		*stash;
+	char		*remainder;
 	ssize_t		i;
 
 	i = 0;
-	while (line_chunk[i] != '\n' && line_chunk[i] != '\0')
+	while (line[i] != '\n' && line[i] != '\0')
 		i++;
-	if (line_chunk[i] == '\0')
+	if (line[i] == '\0')
 		return (NULL);
-	stash = ft_substr(line_chunk, i + 1, ft_strlen(line_chunk) - i);
-	if (*stash == '\0')
+	remainder = ft_substr(line, i + 1, ft_strlen(line) - i);
+	if (*remainder == '\0')
 	{
-		free(stash);
-		stash = NULL;
+		free(remainder);
+		remainder = NULL;
 	}
-	line_chunk[i + 1] = '\0';
-	return (stash);
+	line[i + 1] = '\0';
+	return (remainder);
 }
 
-static char	*fill_until_nl(int fd, char *stash, char *buffer)
+char	*fill_until_nl(int fd, char *stash, char *buffer)
 {
 	ssize_t		rd_bytes;
 	char		*tmp;
@@ -103,17 +103,20 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int main (void)
-{
-	int fd;
-	char *res;
-	fd = open("test.txt", O_RDONLY);
-	while (res != NULL)
-	{
-		res = get_next_line(fd);
-		printf("%s", res);
-		free(res);
-	}
-	close(fd);
-	return (0);
-}
+// int main (void)
+// {
+// 	int fd;
+// 	int i;
+// 	char *res;
+// 	fd = open("test.txt", O_RDONLY);
+// 	i = 0;
+// 	while (i < 3)
+// 	{
+// 		res = get_next_line(fd);
+// 		printf("%s", res);
+// 		free(res);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
