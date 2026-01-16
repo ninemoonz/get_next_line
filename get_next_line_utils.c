@@ -6,7 +6,7 @@
 /*   By: koodal <koodal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:04:47 by koodal            #+#    #+#             */
-/*   Updated: 2026/01/16 16:41:27 by koodal           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:07:05 by koodal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		tot_len;
 	char	*dest_mem;
-	int		i;
+	size_t		i;
 
-	tot_len = ft_strlen(s);
 	dest_mem = (char *)malloc((len + 1) * sizeof(char));
 	i = 0;
 	while (i < len)
