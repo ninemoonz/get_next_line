@@ -6,7 +6,7 @@
 /*   By: koodal <koodal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 10:28:32 by koodal            #+#    #+#             */
-/*   Updated: 2026/01/16 16:43:52 by koodal           ###   ########.fr       */
+/*   Updated: 2026/01/16 16:52:05 by koodal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char *extract_nl(char *line)
 {
-    char *remainder;
+    static char *remainder;
     int i;
     
     i = 0;
@@ -22,15 +22,11 @@ char *extract_nl(char *line)
         i++;
     remainder = ft_substr(line, i + 1, ft_strlen(line) - i);
     line[i + 1] = '\0';
-    printf("i index: %d\n", i);    
-    printf("character: (new line)%c", line[i]);
-    printf("remainder: %s\n", remainder);
-    return (line);
+    return (remainder);
 }
 
-char *until_nl(int fd, char *buffer)
+char *until_nl(int fd, char *buffer, char *stash)
 {
-    static char *stash;
     char *tmp;
     int rd_bytes;
     
@@ -53,15 +49,15 @@ char *until_nl(int fd, char *buffer)
 
 char *get_next_line(int fd)
 {
+    static char *stash;
     char *line_until_nl;
     char *buffer;
-    char *remainder;
     
     if (fd < 0)
         return (NULL);
     buffer = malloc(BUFFER_SIZE + 1);
-    line_until_nl = until_nl(fd, buffer);
-    remainder = extract_nl(line_until_nl);
+    line_until_nl = until_nl(fd, buffer, stash);
+    stash = extract_nl(line_until_nl);
     free(buffer);
     buffer = NULL;
     return (line_until_nl);    
@@ -74,7 +70,11 @@ int main (void)
 
     fd = open("test.txt", O_RDONLY);
     str = get_next_line(fd);
-    printf("%s\n", str);
+    printf("%s", str);
+    str = get_next_line(fd);
+    printf("%s", str);
+    str = get_next_line(fd);
+    printf("%s", str);
     close(fd);
     return (0);
 }
