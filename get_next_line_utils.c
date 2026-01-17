@@ -6,11 +6,31 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:45 by kkweon            #+#    #+#             */
-/*   Updated: 2025/12/18 14:43:18 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/17 15:54:29 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_strchr(const char *str, int init)
+{
+	int		i;
+	char	*tmp_str;
+	char	c;
+
+	i = 0;
+	c = (char)init;
+	tmp_str = (char *)str;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			return ((char *)&tmp_str[i]);
+		i++;
+	}
+	if (str[i] == c)
+		return ((char *)&tmp_str[i]);
+	return (NULL);
+}
 
 size_t	ft_strlen(const char *str)
 {

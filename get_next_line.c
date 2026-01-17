@@ -6,31 +6,11 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2026/01/15 17:52:52 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/17 16:17:49 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_strchr(const char *str, int init)
-{
-	int		i;
-	char	*tmp_str;
-	char	c;
-
-	i = 0;
-	c = (char)init;
-	tmp_str = (char *)str;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return ((char *)&tmp_str[i]);
-		i++;
-	}
-	if (str[i] == c)
-		return ((char *)&tmp_str[i]);
-	return (NULL);
-}
 
 char	*extract_line(char *line)
 {
@@ -94,7 +74,7 @@ char	*get_next_line(int fd)
 	}
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return (free(buffer), NULL);
+		return (NULL);
 	line = fill_until_nl(fd, stash, buffer);
 	free(buffer);
 	if (!line)
@@ -108,14 +88,15 @@ char	*get_next_line(int fd)
 // 	int fd;
 // 	int i;
 // 	char *res;
+	
 // 	fd = open("test.txt", O_RDONLY);
-// 	i = 0;
-// 	while (i < 3)
+// 	while (1)
 // 	{
 // 		res = get_next_line(fd);
+// 		if (res == NULL)
+// 			break;
 // 		printf("%s", res);
 // 		free(res);
-// 		i++;
 // 	}
 // 	close(fd);
 // 	return (0);
