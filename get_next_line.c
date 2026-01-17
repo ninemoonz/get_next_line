@@ -6,7 +6,7 @@
 /*   By: kkweon <kkweon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:52:43 by kkweon            #+#    #+#             */
-/*   Updated: 2026/01/17 16:17:49 by kkweon           ###   ########.fr       */
+/*   Updated: 2026/01/17 16:23:58 by kkweon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 // 	int fd;
 // 	int i;
 // 	char *res;
-	
+
 // 	fd = open("test.txt", O_RDONLY);
 // 	while (1)
 // 	{
